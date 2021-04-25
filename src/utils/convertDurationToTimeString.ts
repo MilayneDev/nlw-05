@@ -1,6 +1,6 @@
 import { addMinutes } from "date-fns";
 
-export function convertDurationToTimeString(duration: number): {
+export function convertDurationToTimeString(duration: number) {
   const hours =Math.floor (duration / 3600)
   const minutes = Math.floor ((duration % 3600) / 60)
   const seconds = duration % 60;

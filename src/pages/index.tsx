@@ -15,8 +15,9 @@ type Episode = {
   url: string;
   publishedAd: string;
 }
-type: HomeProps = {
-  episodes: Episode []; 
+
+type HomeProps = {
+  episodes: Episode[];
 
 }
 
@@ -24,7 +25,7 @@ export default function Home(props: HomeProps) {
   return (
     <div>
       <h1>Index</h1>
-      <p>{JSON.stringify(props: HomeProps)}</p>
+      <p>{JSON.stringify(props.episodes)}</p>
     </div>
     
   )
@@ -48,7 +49,7 @@ export const getStaticProps: GetStaticProps = async () => {
       members: episode.members,
       publishedAt:format(parseISO(episode.published_at), 'd MMM yy', {locale:ptBR }),
       duration: Number(episode.file.duration),
-      durationAsString: convertDurationToTimeString(Number(episode.file.duration))
+      durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
       description: episode.description,
       url: episode.file.url,
 
