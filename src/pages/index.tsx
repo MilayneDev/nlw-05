@@ -13,6 +13,7 @@ import { PlayerContext } from '../contexts/PlayerContext';
 
 
 type Episode = {
+
   id: string;
   title: string;
   thumbnail: string;
@@ -29,14 +30,17 @@ type HomeProps = {
 }
 
 export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
-  const {play} =useContext(PlayerContext)
+  const { playList } =useContext(PlayerContext)
+
+  const episodeList = [...latestEpisodes,...allEpisodes];
+
   return (
     <div className={styles.homepage}>
      <section className={styles.latestEpisodes}> 
        <h2> Últimos lançamentos </h2>
 
       <ul>
-       {latestEpisodes.map(episode => {
+       {latestEpisodes.map((episode, inddex) => {
 
           return(
             <li key={episode.id}>
@@ -54,11 +58,11 @@ export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
                 </Link>
                
                 <p>{episode.members}</p>
-                <span>{episode.publishedAt}</span>
+                <span>{episode.publishedAd}</span>
                 <span>{episode.durationAsString}</span>
               </div>
 
-              <button type="button" onClick={()=> play(episode)}>
+              <button type="button" onClick={()=> playList(episodeList,  inddex)}>
                 <img src="play-green.svg" alt="Tocar episódio" />
               </button>
             </li>
@@ -82,7 +86,7 @@ export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
             </tr>
           </thead>
           <tbody>
-            {allEpisodes.map(episode =>{
+            {allEpisodes.map((episode, index) =>{
               return(
                 <tr key={episode.id}>
                   <td style={{width:100}}>
@@ -90,7 +94,7 @@ export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
                     width={120}
                     height={120}
                     src={episode.thumbnail}
-                    alt={episode}
+                    alt="episode"
                     objectFit="cover"
 
                     />
@@ -101,10 +105,10 @@ export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
                       </Link>
                     </td>
                     <td>{episode.members}</td>
-                    <td style={{width:100}}>{episode.publishedAt}</td>
+                    <td style={{width:100}}>{episode.publishedAd}</td>lembrando o certo era publishedAt()
                     <td>{episode.durationAsString}</td>
                     <td>
-                      <button type="button">
+                      <button type="button" onClick={() => playList(episodeList, index + latestEpisodes.length )} >
                         <img src="/play-green.svg" alt="Tocar episódio"/>   
                       </button>
                     </td>
