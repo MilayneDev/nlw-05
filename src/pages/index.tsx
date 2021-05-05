@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import Image from  'next/image';
+import Head from 'next/head';
 import Link from 'next/link'
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR'
@@ -8,8 +9,8 @@ import { api } from '../services/api';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
 
 import styles from './home.module.scss';
-import { useContext } from 'react';
-import { PlayerContext } from '../contexts/PlayerContext';
+import { PlayerContext, usePlayer } from '../contexts/PlayerContext';
+
 
 
 type Episode = {
@@ -30,12 +31,15 @@ type HomeProps = {
 }
 
 export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
-  const { playList } =useContext(PlayerContext)
+  const { playList } =usePlayer()
 
   const episodeList = [...latestEpisodes,...allEpisodes];
 
   return (
     <div className={styles.homepage}>
+    <Head>
+      <title>Home | Podcastr</title>
+    </Head>
      <section className={styles.latestEpisodes}> 
        <h2> Últimos lançamentos </h2>
 
@@ -105,7 +109,7 @@ export default function Home({latestEpisodes, allEpisodes }: HomeProps) {
                       </Link>
                     </td>
                     <td>{episode.members}</td>
-                    <td style={{width:100}}>{episode.publishedAd}</td>lembrando o certo era publishedAt()
+                    <td style={{width:100}}>{episode.publishedAt}</td>
                     <td>{episode.durationAsString}</td>
                     <td>
                       <button type="button" onClick={() => playList(episodeList, index + latestEpisodes.length )} >
